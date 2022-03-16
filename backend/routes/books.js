@@ -8,4 +8,16 @@ router. get('/', async (req, res) => {
     res.json(books);
 });
 
+router.post('/', async(req, res)=>{
+    const{ title, author, isbn } = req.body;
+    const newBook = new Book({title, author, isbn})
+    await newBook.save();
+    res.json({message: 'Book saved'})
+})
+
+router.delete('/:id', async (req, res) => {
+    await Book.findByIdAndDelete(req.params.id);
+    res.send('Book deleted');
+})
+
 module.exports = router;
